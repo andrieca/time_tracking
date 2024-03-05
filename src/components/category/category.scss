@@ -1,0 +1,23 @@
+.category{
+    margin: 15px auto;
+    border-radius: 10px;
+    border: 1px solid rgba(250, 109, 109, 0.795);
+    background-color: rgba(250, 109, 109, 0.795);
+    .category-name{
+        margin: 0 ;
+        height: 3rem;
+        line-height: 3rem;     
+    }
+
+    .category-p{
+        margin: 0 ;
+        height: 3rem;
+        line-height: 3rem;
+    }
+
+    .category-btn{
+        border-radius: 8px;
+        border: 2px solid gray;
+        
+    }
+}

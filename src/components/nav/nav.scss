@@ -1,0 +1,36 @@
+.navMy{
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    height: 4rem;
+    margin: 30px auto;
+    .nav1{
+        width: 100%;
+        display: flex;
+        .btn-new{
+            // display: flex;
+            width: 100%;
+            height: 4rem;
+            line-height: 4rem;
+            text-align: center;
+            text-decoration: none;
+            color: black;
+            border: 2px solid gray;
+            border-radius: 10px;
+        }
+    }
+    .nav2{
+        width: 100%;
+        display: flex;
+        .btn-all{
+            width: 100%;
+            height: 4rem;
+            line-height: 4rem;
+            text-align: center;
+            text-decoration: none;
+            color: black;
+            border: 2px solid gray;
+            border-radius: 10px;
+        }
+    }
+}

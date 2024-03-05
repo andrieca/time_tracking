@@ -1,0 +1,32 @@
+.category-tag{
+    width: 80%;
+    margin: 15px auto;
+    border-radius: 10px;
+    border: 1px solid rgba(250, 109, 109, 0.795);
+    background-color: rgba(250, 109, 109, 0.795);
+    &-tag{
+        margin: 0 ;
+        height: 3rem;
+        line-height: 3rem;     
+    }
+
+    &-p-tag{
+        margin: 0 ;
+        height: 3rem;
+        line-height: 3rem;
+    }
+
+    &-btn-tag{
+        border-radius: 8px;
+        border: 2px solid gray;
+        
+    }
+
+}
+.categories-btn-stop{
+    width: 80%;
+    height: 2rem;
+    border-radius: 5px;
+    border: 2px solid gray;
+    margin-left: 130px;
+}
