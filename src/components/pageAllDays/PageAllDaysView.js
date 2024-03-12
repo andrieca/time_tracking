@@ -1,34 +1,59 @@
 
-import React, { useEffect, useState } from 'react';
-import pageAllDaysStor from '../pageAllDays/PageAllDaysStor';
-import { observer } from 'mobx-react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import addCategoriesStor from '../addCategories/AddCategoriesStor';
-import pageTagStor from '../pageTag/PageTagStor';
-import "./pageAllDays.scss";
+import { collection, query, getDocs } from 'firebase/firestore';
+import { db } from '../firebase';
+import "./pageAllDays.scss"
 
 
-const PageAllDaysView = observer(() => {
+const PageAllDaysView = () => {
+    const [datesWithTotalTime, setDatesWithTotalTime] = useState([]);
 
-    const handleAllDays = () => {
-      const allDays = pageAllDaysStor.days;
-      const allDaysNew = JSON.stringify(allDays);
-      localStorage.setItem("allDaysNew",allDaysNew);
-    }
-
+    useEffect(() => {
+      const fetchDatesWithTotalTime = async () => {
+        try {
+          const q = query(collection(db, 'categoryBase'));
+          const querySnapshot = await getDocs(q);
+          const datesMap = new Map();
+  
+          querySnapshot.forEach((doc) => {
+            const categoryData = doc.data();
+            const createdAt = categoryData.createdAt;
+            const timeElapsed = categoryData.timeElapsed;
+            
+            if (datesMap.has(createdAt)) {
+              datesMap.set(createdAt, datesMap.get(createdAt) + timeElapsed);
+            } else {
+              datesMap.set(createdAt, timeElapsed);
+            }
+          });
+  
+          setDatesWithTotalTime(Array.from(datesMap));
+        } catch (error) {
+          console.error('Error fetching dates with total time:', error);
+        }
+      };
+  
+      fetchDatesWithTotalTime();
+    }, []);
+  
+    const formatTime = (totalSeconds) => {
+      const hours = Math.floor(totalSeconds / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      return `${hours}:${minutes.toString().padStart(2, '0')}`;
+    };
+  
     return (
-    <div>
-    {pageAllDaysStor.days.map(day => (
-            console.log("day", day),
-       <div className='page-all'>
-           <Link to={`/day/${day}`} key={day} onClick={handleAllDays}>
-               {day}
-           </Link>
-           <p className='add-categories-p'>Total Time: {addCategoriesStor.totalTime}</p>
-       </div>
-    ))}
-</div>
+      <div className='page-all'>
+        <h1>Date List</h1>
+        {datesWithTotalTime.map(([date, totalTime]) => (
+          <div key={date}>
+            <Link to={`/${date}`}>{date}</Link>
+            <span>Total Time: {formatTime(totalTime)}</span>
+          </div>
+        ))}
+      </div>
     );
-  });
-
+  };
+  
 export default PageAllDaysView;

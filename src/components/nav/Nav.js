@@ -9,8 +9,8 @@ function NaviM(props) {
         <div>
             <div className='navMy '>
                 <div className='nav1'>
-                    <NavLink to="/category" className='btn-new' style={({isActive}) => ({backgroundColor: isActive ? "rgba(196, 118, 118, 0.795)" : 'rgb(231, 226, 226)'})}>
-                        {/* <button className='btn-new'>new sesion</button> */}New Sesion
+                    <NavLink to="/categoryDay" className='btn-new' style={({isActive}) => ({backgroundColor: isActive ? "rgba(196, 118, 118, 0.795)" : 'rgb(231, 226, 226)'})}>
+                        {/* <button className='btn-new'>new sesion</button> */}Sesion
                         </NavLink>
                     
                 </div>

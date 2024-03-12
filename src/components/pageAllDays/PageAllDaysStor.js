@@ -1,26 +1,38 @@
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { collection, query, where, getDocs } from 'firebase/firestore';
+import { db } from '../firebase';
 
-import { action, computed, makeObservable, observable } from "mobx";
+const PageAllDaysStor = () => {
+  const { date } = useParams();
+  const [totalTime, setTotalTime] = useState(0);
 
-class PageAllDaysStor{
-    days = []
+  useEffect(() => {
+    const fetchTotalTime = async () => {
+      try {
+        const q = query(collection(db, 'categoryBase'), where('createdAt', '==', date));
+        const querySnapshot = await getDocs(q);
+        let total = 0;
+        querySnapshot.forEach((doc) => {
+          const categoryData = doc.data();
+          total += categoryData.timeElapsed;
+        });
+        setTotalTime(total);
+      } catch (error) {
+        console.error('Error fetching categories by date:', error);
+      }
+    };
 
-    constructor(){
-        makeObservable(this, {
-            days : observable,
-            addDays : action,
-        })
-    }
+    fetchTotalTime();
+  }, [date]);
 
-    addDays(date){
-        console.log('date', date);
-        let today = this.days.find(day => day.date === date.date);
-        if(!today){
-            today = date;
-            this.days.push(today)
-            console.log("days",this.days)
-        }
-        console.log("days",this.days)
-    }
-}
-const pageAllDaysStor = new PageAllDaysStor();
-export default pageAllDaysStor;
+  return (
+    <div>
+      <h1>Categories for {date}</h1>
+      <p>Total time: {totalTime}</p>
+      {/* Додатковий код для відображення категорій за певну дату */}
+    </div>
+  );
+};
+
+export default PageAllDaysStor;
